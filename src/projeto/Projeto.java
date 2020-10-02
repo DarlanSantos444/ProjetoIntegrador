@@ -19,7 +19,6 @@ public class Projeto {
     double peso_ferro = quantidade * comprimento * peso_metro;
     double comp_total = quantidade * comprimento;
     
-    
     public static void main(String[] args) {
         // TODO code application logic here
     }

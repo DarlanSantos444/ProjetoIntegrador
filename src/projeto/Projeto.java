@@ -7,7 +7,6 @@ package projeto;
 
 
 public class Projeto {
-
     String tipo;
     double diametro;
     double peso_metro;

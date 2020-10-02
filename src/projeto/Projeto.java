@@ -5,10 +5,7 @@
  */
 package projeto;
 
-/**
- *
- * @author Alzilene Alencar
- */
+
 public class Projeto {
 
     String tipo;

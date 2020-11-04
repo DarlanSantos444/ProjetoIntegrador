@@ -124,18 +124,35 @@ public class Login extends javax.swing.JFrame {
     private void btnentrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnentrarActionPerformed
         Model m = new Model();
         Usuario u = m.buscaUsuario(ctusuario.getText());
-        if (!u.getSenha().equals(ctsenha)) {
-            JOptionPane.showMessageDialog(rootPane, "Senha Incorreta");
-        } else {
+        if (!u.getSenha().equals(criptoSenha(ctsenha))) {
+            JOptionPane.showMessageDialog(rootPane, "As senhas não conferem");
+        }else{
             new FormPrincipal().setVisible(true);
         }
     }//GEN-LAST:event_btnentrarActionPerformed
+    
     
    
     private void btncadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncadastrarActionPerformed
         new Cadastro().setVisible(true);
     }//GEN-LAST:event_btncadastrarActionPerformed
 
+    private String criptoSenha(JPasswordField s) {
+        String senha = new String(s.getPassword());
+        try {
+            MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
+            byte messageDigest[] = algorithm.digest(senha.getBytes("UTF-8"));
+            StringBuilder hexStringSenhaAdmin = new StringBuilder();
+            for (byte b : messageDigest) {
+                hexStringSenhaAdmin.append(String.format("%02X", 0xFF & b));
+            }
+            return hexStringSenhaAdmin.toString();
+        } catch (Exception e) {
+            return "Erro de criptografia: "+e;
+        }
+
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -181,4 +198,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     // End of variables declaration//GEN-END:variables
+
+
 }

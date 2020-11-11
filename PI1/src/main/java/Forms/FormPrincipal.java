@@ -27,8 +27,10 @@ public class FormPrincipal extends javax.swing.JDialog {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tbFerro = new javax.swing.JTable();
+        btAddFerro = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        menuTabela = new javax.swing.JMenu();
+        addFerro = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -50,8 +52,25 @@ public class FormPrincipal extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(tbFerro);
 
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
+        btAddFerro.setText("Add Ferro");
+        btAddFerro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAddFerroActionPerformed(evt);
+            }
+        });
+
+        menuTabela.setText("Tabela");
+
+        addFerro.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, java.awt.event.InputEvent.ALT_DOWN_MASK));
+        addFerro.setText("Add Ferro");
+        addFerro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addFerroActionPerformed(evt);
+            }
+        });
+        menuTabela.add(addFerro);
+
+        jMenuBar1.add(menuTabela);
 
         setJMenuBar(jMenuBar1);
 
@@ -61,14 +80,20 @@ public class FormPrincipal extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btAddFerro)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 125, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btAddFerro)
+                .addGap(0, 84, Short.MAX_VALUE))
         );
 
         pack();
@@ -78,6 +103,17 @@ public class FormPrincipal extends javax.swing.JDialog {
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
        montarTabela();
     }//GEN-LAST:event_formWindowActivated
+
+    private void addFerroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFerroActionPerformed
+       FormAddFerro faf = new FormAddFerro();
+       faf.setVisible(true);
+    }//GEN-LAST:event_addFerroActionPerformed
+
+    private void btAddFerroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddFerroActionPerformed
+       FormAddFerro faf = new FormAddFerro();
+       faf.setModal(true);
+       faf.setVisible(true);
+    }//GEN-LAST:event_btAddFerroActionPerformed
 
     /**
      * @param args the command line arguments
@@ -127,9 +163,11 @@ public class FormPrincipal extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuItem addFerro;
+    private javax.swing.JButton btAddFerro;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JMenu menuTabela;
     private javax.swing.JTable tbFerro;
     // End of variables declaration//GEN-END:variables
 }

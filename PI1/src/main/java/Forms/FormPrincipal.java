@@ -28,6 +28,8 @@ public class FormPrincipal extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbFerro = new javax.swing.JTable();
         btAddFerro = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuTabela = new javax.swing.JMenu();
         addFerro = new javax.swing.JMenuItem();
@@ -59,6 +61,15 @@ public class FormPrincipal extends javax.swing.JDialog {
             }
         });
 
+        jButton1.setText("Editar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Excluir");
+
         menuTabela.setText("Tabela");
 
         addFerro.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, java.awt.event.InputEvent.ALT_DOWN_MASK));
@@ -84,6 +95,10 @@ public class FormPrincipal extends javax.swing.JDialog {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btAddFerro)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton2)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -92,7 +107,10 @@ public class FormPrincipal extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btAddFerro)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btAddFerro)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addGap(0, 84, Short.MAX_VALUE))
         );
 
@@ -114,6 +132,20 @@ public class FormPrincipal extends javax.swing.JDialog {
        faf.setModal(true);
        faf.setVisible(true);
     }//GEN-LAST:event_btAddFerroActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (tbFerro.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(rootPane, "Selecione um cliente para esta ação");
+        } else {
+            FormAddFerro ff = new FormAddFerro();
+            ff.f.setId((Long) tbFerro.getValueAt(tbFerro.getSelectedRow(), 0));
+            ff.f.setTipo((String) tbFerro.getValueAt(tbFerro.getSelectedRow(), 1));
+            ff.f.setDiametro((Double) tbFerro.getValueAt(tbFerro.getSelectedRow(), 2));
+            ff.f.setPeso_metro((Double) tbFerro.getValueAt(tbFerro.getSelectedRow(), 3));
+            ff.setModal(true);
+            ff.setVisible(true);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -165,6 +197,8 @@ public class FormPrincipal extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem addFerro;
     private javax.swing.JButton btAddFerro;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenu menuTabela;

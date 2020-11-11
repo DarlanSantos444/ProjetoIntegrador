@@ -42,6 +42,11 @@ public class FormAddFerro extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jLabel1.setText("Tipo");
 
@@ -116,15 +121,21 @@ public class FormAddFerro extends javax.swing.JDialog {
         if (mt.salvar(f) == true) {
             System.out.println("ID: "+f.getId());
             if (f.getId() == null) {
-                JOptionPane.showMessageDialog(rootPane, "Ferro Adicionado com Sucesso");
-            }else{
                 JOptionPane.showMessageDialog(rootPane, "Ferro Alterado com Sucesso");
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Ferro Adicionado com Sucesso");
             }
             f.setId(null);
         } else {
             JOptionPane.showMessageDialog(rootPane, "Erro no Cadastro do Ferro");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+       if (f.getId() != null) {
+            ctTipo.setText(f.getTipo());
+        }
+    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments

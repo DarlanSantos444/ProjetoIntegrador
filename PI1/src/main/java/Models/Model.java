@@ -1,6 +1,8 @@
 package Models;
 
+import Entidades.Ferro;
 import Entidades.Usuario;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -35,8 +37,28 @@ public class Model {
         
     }
 
-    public Usuario buscaUsuario(String text) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+    public Usuario buscaUsuario(String nome){
+        EntityManager em = Model.openDB();//Abre a conexão
+        try {
+            return (Usuario) em.createQuery("select u from Usuario u where u.nome = '"+nome+"'").getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }finally{
+            em.close();
+        }
     }
+    
+    public List<Ferro> listaFerro(){
+        EntityManager em = Model.openDB();//Abre a conexão
+        try {
+            return em.createQuery("select u from ferro").getResultList();
+        } catch (Exception e) {
+            return null;
+        }finally{
+            em.close();
+        }
+    }
+    
     
 }

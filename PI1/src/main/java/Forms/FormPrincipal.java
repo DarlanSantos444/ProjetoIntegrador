@@ -1,6 +1,9 @@
 
 package Forms;
 
+import Entidades.Ferro;
+import Models.ModelTabela;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class FormPrincipal extends javax.swing.JDialog {
@@ -64,8 +67,8 @@ public class FormPrincipal extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 113, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 125, Short.MAX_VALUE))
         );
 
         pack();
@@ -79,12 +82,17 @@ public class FormPrincipal extends javax.swing.JDialog {
     /**
      * @param args the command line arguments
      */
-    
-    private void montarTabela(){
-        tbFerro.setModel(new DefaultTableModel(new Object[][]{},
-        new String[]{"tipo","diametro","peso_metro"}));
+    private void montarTabela() {
+        tbFerro.setModel(new DefaultTableModel(
+                new Object[][]{}, new String[]{"ID","TIPO", "DIAMETRO", "PESO/M"}
+        ));
         tabela = (DefaultTableModel) tbFerro.getModel();
+        ModelTabela mt = new ModelTabela();
+        for (Ferro f : mt.listaFerro()) {
+            tabela.addRow(new Object[]{f.getId(),f.getTipo(), f.getDiametro(), f.getPeso_metro()});
+        }
     }
+    
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

@@ -127,7 +127,9 @@ public class Login extends javax.swing.JFrame {
         if (!u.getSenha().equals(criptoSenha(ctsenha))) {
             JOptionPane.showMessageDialog(rootPane, "As senhas não conferem");
         }else{
-            new FormPrincipal().setVisible(true);
+            FormPrincipal fp = new FormPrincipal();
+            fp.setModal(true);
+            fp.setVisible(true);
         }
     }//GEN-LAST:event_btnentrarActionPerformed
     

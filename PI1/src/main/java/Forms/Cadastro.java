@@ -3,6 +3,7 @@ package Forms;
 
 import Entidades.Usuario;
 import Models.Model;
+import java.security.MessageDigest;
 import javax.swing.JOptionPane;
 
 public class Cadastro extends javax.swing.JFrame {
@@ -105,19 +106,42 @@ public class Cadastro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btncadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncadastrarActionPerformed
-        Usuario u = new Usuario();
-        Model m = new Model();
-        u.setNome(ctusuario.getText());
-        u.setSenha(ctsenha.getText());
-        if (m.salvar(u)==true) {
-            JOptionPane.showMessageDialog(rootPane, "Usuário Cadastrado");
-        }else{
-            JOptionPane.showMessageDialog(rootPane, "Erro ao Cadastrar");
+        String senha = new String(ctsenha.getPassword());
+        String repeteSenha = new String(ctrsenha.getPassword());
+
+        if (ctusuario.getText().isEmpty() || senha.isEmpty() || repeteSenha.isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "Não pode haver campos vazio");
+        } else if (!senha.equals(repeteSenha)) {
+            JOptionPane.showMessageDialog(rootPane, "A senhas não são iguais");
+        } else {
+            Model mu = new Model();
+            Usuario u = new Usuario();
+            u.setSenha(criptoSenha(senha));
+            u.setNome(ctusuario.getText());
+            if (mu.salvar(u)) {
+                JOptionPane.showMessageDialog(rootPane, "Usuário cadastrado com sucesso");
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Erro no cadastro");
+            }
         }
-        
-        new Login().setVisible(true);
     }//GEN-LAST:event_btncadastrarActionPerformed
 
+    private String criptoSenha(String senha) {
+        try {
+            MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
+            byte messageDigest[] = algorithm.digest(senha.getBytes("UTF-8"));
+            StringBuilder hexStringSenhaAdmin = new StringBuilder();
+            for (byte b : messageDigest) {
+                hexStringSenhaAdmin.append(String.format("%02X", 0xFF & b));
+            }
+            return hexStringSenhaAdmin.toString();
+        } catch (Exception e) {
+            return "Erro de criptografia: "+e;
+        }
+
+    }
+    
+    
     /**
      * @param args the command line arguments
      */

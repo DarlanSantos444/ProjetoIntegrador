@@ -39,7 +39,7 @@ public class FormAddFerro extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btEditar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -54,11 +54,11 @@ public class FormAddFerro extends javax.swing.JDialog {
 
         jLabel3.setText("Peso/Metro");
 
-        jButton1.setBackground(new java.awt.Color(0, 40, 0));
-        jButton1.setText("Salvar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btEditar.setBackground(new java.awt.Color(0, 40, 0));
+        btEditar.setText("Salvar");
+        btEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btEditarActionPerformed(evt);
             }
         });
 
@@ -87,7 +87,7 @@ public class FormAddFerro extends javax.swing.JDialog {
                 .addGap(52, 52, 52))
             .addGroup(layout.createSequentialGroup()
                 .addGap(161, 161, 161)
-                .addComponent(jButton1)
+                .addComponent(btEditar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -104,7 +104,7 @@ public class FormAddFerro extends javax.swing.JDialog {
                     .addComponent(ctDiametro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ctPesoM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btEditar)
                 .addContainerGap())
         );
 
@@ -112,14 +112,13 @@ public class FormAddFerro extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
         ModelTabela mt = new ModelTabela();
         f.setTipo(ctTipo.getText());
         f.setDiametro(Double.parseDouble(ctDiametro.getText()));
         f.setPeso_metro(Double.parseDouble(ctPesoM.getText()));
 
         if (mt.salvar(f) == true) {
-            System.out.println("ID: "+f.getId());
             if (f.getId() == null) {
                 JOptionPane.showMessageDialog(rootPane, "Ferro Alterado com Sucesso");
             }else{
@@ -129,11 +128,13 @@ public class FormAddFerro extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(rootPane, "Erro no Cadastro do Ferro");
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btEditarActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
        if (f.getId() != null) {
             ctTipo.setText(f.getTipo());
+            ctDiametro.setText(Double.toString(f.getDiametro()));
+            ctPesoM.setText(Double.toString(f.getPeso_metro()));
         }
     }//GEN-LAST:event_formWindowActivated
 
@@ -174,10 +175,10 @@ public class FormAddFerro extends javax.swing.JDialog {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btEditar;
     private javax.swing.JTextField ctDiametro;
     private javax.swing.JTextField ctPesoM;
     private javax.swing.JTextField ctTipo;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

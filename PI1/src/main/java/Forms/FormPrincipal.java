@@ -3,6 +3,7 @@ package Forms;
 
 import Entidades.Ferro;
 import Models.ModelTabela;
+import javax.persistence.EntityManager;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -28,11 +29,14 @@ public class FormPrincipal extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbFerro = new javax.swing.JTable();
         btAddFerro = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btEdtFerro = new javax.swing.JButton();
+        btDelFerro = new javax.swing.JButton();
+        btCalcular = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuTabela = new javax.swing.JMenu();
         addFerro = new javax.swing.JMenuItem();
+        editFerro = new javax.swing.JMenuItem();
+        delFerro = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -54,6 +58,7 @@ public class FormPrincipal extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(tbFerro);
 
+        btAddFerro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/add.png"))); // NOI18N
         btAddFerro.setText("Add Ferro");
         btAddFerro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -61,18 +66,34 @@ public class FormPrincipal extends javax.swing.JDialog {
             }
         });
 
-        jButton1.setText("Editar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btEdtFerro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/editar.png"))); // NOI18N
+        btEdtFerro.setText("Editar");
+        btEdtFerro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btEdtFerroActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Excluir");
+        btDelFerro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/excluir.png"))); // NOI18N
+        btDelFerro.setText("Excluir");
+        btDelFerro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btDelFerroActionPerformed(evt);
+            }
+        });
+
+        btCalcular.setBackground(new java.awt.Color(0, 50, 0));
+        btCalcular.setText("Calcular");
+        btCalcular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCalcularActionPerformed(evt);
+            }
+        });
 
         menuTabela.setText("Tabela");
 
         addFerro.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, java.awt.event.InputEvent.ALT_DOWN_MASK));
+        addFerro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/add.png"))); // NOI18N
         addFerro.setText("Add Ferro");
         addFerro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -80,6 +101,21 @@ public class FormPrincipal extends javax.swing.JDialog {
             }
         });
         menuTabela.add(addFerro);
+
+        editFerro.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.ALT_DOWN_MASK));
+        editFerro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/editar.png"))); // NOI18N
+        editFerro.setText("Editar Ferro");
+        editFerro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editFerroActionPerformed(evt);
+            }
+        });
+        menuTabela.add(editFerro);
+
+        delFerro.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.ALT_DOWN_MASK));
+        delFerro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imgs/excluir.png"))); // NOI18N
+        delFerro.setText("Excluir Ferro");
+        menuTabela.add(delFerro);
 
         jMenuBar1.add(menuTabela);
 
@@ -90,28 +126,36 @@ public class FormPrincipal extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btAddFerro)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(btAddFerro, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btEdtFerro)
+                        .addGap(33, 33, 33)
+                        .addComponent(btDelFerro)
+                        .addGap(18, 18, 18)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btCalcular)
+                .addGap(161, 161, 161))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btAddFerro)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(0, 84, Short.MAX_VALUE))
+                    .addComponent(btEdtFerro)
+                    .addComponent(btDelFerro))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addComponent(btCalcular)
+                .addGap(21, 21, 21))
         );
 
         pack();
@@ -133,9 +177,9 @@ public class FormPrincipal extends javax.swing.JDialog {
        faf.setVisible(true);
     }//GEN-LAST:event_btAddFerroActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btEdtFerroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEdtFerroActionPerformed
         if (tbFerro.getSelectedRow() < 0) {
-            JOptionPane.showMessageDialog(rootPane, "Selecione um cliente para esta ação");
+            JOptionPane.showMessageDialog(rootPane, "Selecione um Item para esta ação");
         } else {
             FormAddFerro ff = new FormAddFerro();
             ff.f.setId((Long) tbFerro.getValueAt(tbFerro.getSelectedRow(), 0));
@@ -145,7 +189,35 @@ public class FormPrincipal extends javax.swing.JDialog {
             ff.setModal(true);
             ff.setVisible(true);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btEdtFerroActionPerformed
+
+    private void editFerroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editFerroActionPerformed
+        if (tbFerro.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(rootPane, "Selecione um Item para esta ação");
+        } else {
+            FormAddFerro ff = new FormAddFerro();
+            ff.f.setId((Long) tbFerro.getValueAt(tbFerro.getSelectedRow(), 0));
+            ff.f.setTipo((String) tbFerro.getValueAt(tbFerro.getSelectedRow(), 1));
+            ff.f.setDiametro((Double) tbFerro.getValueAt(tbFerro.getSelectedRow(), 2));
+            ff.f.setPeso_metro((Double) tbFerro.getValueAt(tbFerro.getSelectedRow(), 3));
+            ff.setModal(true);
+            ff.setVisible(true);
+        }
+    }//GEN-LAST:event_editFerroActionPerformed
+
+    private void btDelFerroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDelFerroActionPerformed
+        ModelTabela mt = new ModelTabela();
+        EntityManager em = ModelTabela.openDB();
+        if (tbFerro.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(rootPane, "Selecione um Item para esta ação");
+        } else {
+            
+        }
+    }//GEN-LAST:event_btDelFerroActionPerformed
+
+    private void btCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCalcularActionPerformed
+       
+    }//GEN-LAST:event_btCalcularActionPerformed
 
     /**
      * @param args the command line arguments
@@ -197,8 +269,11 @@ public class FormPrincipal extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem addFerro;
     private javax.swing.JButton btAddFerro;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btCalcular;
+    private javax.swing.JButton btDelFerro;
+    private javax.swing.JButton btEdtFerro;
+    private javax.swing.JMenuItem delFerro;
+    private javax.swing.JMenuItem editFerro;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenu menuTabela;

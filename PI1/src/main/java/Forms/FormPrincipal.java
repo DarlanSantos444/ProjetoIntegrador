@@ -1,6 +1,8 @@
 
 package Forms;
 
+import Entidades.Calculo;
+import Entidades.Calculo_;
 import Entidades.Ferro;
 import Models.ModelTabela;
 import javax.persistence.EntityManager;
@@ -12,6 +14,9 @@ public class FormPrincipal extends javax.swing.JDialog {
     /**
      * Creates new form FormPrincipal
      */
+    Calculo c = new Calculo();
+    Ferro f = new Ferro();
+    
     DefaultTableModel tabela;
     public FormPrincipal() {
         initComponents();
@@ -32,6 +37,10 @@ public class FormPrincipal extends javax.swing.JDialog {
         btEdtFerro = new javax.swing.JButton();
         btDelFerro = new javax.swing.JButton();
         btCalcular = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        ctComp = new javax.swing.JTextField();
+        ctQtd = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuTabela = new javax.swing.JMenu();
         addFerro = new javax.swing.JMenuItem();
@@ -90,6 +99,16 @@ public class FormPrincipal extends javax.swing.JDialog {
             }
         });
 
+        jLabel1.setText("Quantidade:");
+
+        jLabel2.setText("Comprimento");
+
+        ctQtd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ctQtdActionPerformed(evt);
+            }
+        });
+
         menuTabela.setText("Tabela");
 
         addFerro.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, java.awt.event.InputEvent.ALT_DOWN_MASK));
@@ -126,23 +145,34 @@ public class FormPrincipal extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(btAddFerro, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(ctQtd, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btAddFerro))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btEdtFerro)
-                        .addGap(33, 33, 33)
-                        .addComponent(btDelFerro)
-                        .addGap(18, 18, 18)))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btCalcular)
-                .addGap(161, 161, 161))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(btEdtFerro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(ctComp))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(16, 16, 16)
+                                .addComponent(jLabel2)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btDelFerro)
+                                .addGap(18, 18, 18))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -153,9 +183,15 @@ public class FormPrincipal extends javax.swing.JDialog {
                     .addComponent(btAddFerro)
                     .addComponent(btEdtFerro)
                     .addComponent(btDelFerro))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                .addComponent(btCalcular)
-                .addGap(21, 21, 21))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ctComp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(btCalcular)
+                    .addComponent(ctQtd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         pack();
@@ -216,8 +252,25 @@ public class FormPrincipal extends javax.swing.JDialog {
     }//GEN-LAST:event_btDelFerroActionPerformed
 
     private void btCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCalcularActionPerformed
-       
+       if (tbFerro.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(rootPane, "Selecione um Item para esta ação");
+        } else {
+           f.setPeso_metro((Double) tbFerro.getValueAt(tbFerro.getSelectedRow(), 3));
+           f.setDiametro((Double) tbFerro.getValueAt(tbFerro.getSelectedRow(), 2));
+           c.setQuantidade(Integer.parseInt(ctQtd.getText()));
+           c.setComprimento(Double.parseDouble(ctComp.getText()));
+           c.setPesoTotal(c.getResultado()*f.getPeso_metro());
+           c.setCompTotal(c.getComprimento()*c.getQuantidade());
+           JOptionPane.showMessageDialog(rootPane,"Diâmetro do Ferro Selecionado: "+f.getDiametro()+"\n"
+                   +"Peso por Metro: "+f.getPeso_metro()+"\n"
+                   +"Comprimento Total: "+ c.getCompTotal()+"\n"
+                   + "Peso Total do Ferro: "+c.getPesoTotal());
+       }
     }//GEN-LAST:event_btCalcularActionPerformed
+
+    private void ctQtdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ctQtdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ctQtdActionPerformed
 
     /**
      * @param args the command line arguments
@@ -272,8 +325,12 @@ public class FormPrincipal extends javax.swing.JDialog {
     private javax.swing.JButton btCalcular;
     private javax.swing.JButton btDelFerro;
     private javax.swing.JButton btEdtFerro;
+    private javax.swing.JTextField ctComp;
+    private javax.swing.JTextField ctQtd;
     private javax.swing.JMenuItem delFerro;
     private javax.swing.JMenuItem editFerro;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenu menuTabela;

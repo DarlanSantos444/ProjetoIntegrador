@@ -204,6 +204,7 @@ public class FormPrincipal extends javax.swing.JDialog {
 
     private void addFerroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFerroActionPerformed
        FormAddFerro faf = new FormAddFerro();
+       faf.setModal(true);
        faf.setVisible(true);
     }//GEN-LAST:event_addFerroActionPerformed
 
@@ -262,7 +263,9 @@ public class FormPrincipal extends javax.swing.JDialog {
            c.setPesoTotal(c.getResultado()*f.getPeso_metro());
            c.setCompTotal(c.getComprimento()*c.getQuantidade());
            JOptionPane.showMessageDialog(rootPane,"Diâmetro do Ferro Selecionado: "+f.getDiametro()+"\n"
-                   +"Peso por Metro: "+f.getPeso_metro()+"\n"
+                   +"Peso por Metro do ferro selecionado: "+f.getPeso_metro()+"\n"
+                   +"Quantidade: "+c.getQuantidade()+"\n"
+                   +"Comprimento: "+c.getComprimento()+"\n"
                    +"Comprimento Total: "+ c.getCompTotal()+"\n"
                    + "Peso Total do Ferro: "+c.getPesoTotal());
        }

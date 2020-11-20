@@ -40,6 +40,17 @@ public class ModelTabela {
             em.close();
         }
     }
+    public void delete(Long id){
+    EntityManager em = ModelTabela.openDB();
+        try {
+            Ferro f = em.find(Ferro.class, id);
+            em.getTransaction().begin();
+            em.remove(f);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+        }
+    }
     
     
    

@@ -2,7 +2,6 @@
 package Forms;
 
 import Entidades.Calculo;
-import Entidades.Calculo_;
 import Entidades.Ferro;
 import Models.ModelTabela;
 import javax.persistence.EntityManager;
@@ -244,11 +243,17 @@ public class FormPrincipal extends javax.swing.JDialog {
 
     private void btDelFerroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDelFerroActionPerformed
         ModelTabela mt = new ModelTabela();
-        EntityManager em = ModelTabela.openDB();
         if (tbFerro.getSelectedRow() < 0) {
             JOptionPane.showMessageDialog(rootPane, "Selecione um Item para esta ação");
         } else {
-            
+            if(JOptionPane.showConfirmDialog(rootPane, "Tem certeza que deseja excluir? ") == 0){
+                try {
+                    mt.delete((Long)tbFerro.getValueAt(tbFerro.getSelectedRow(), 0));
+                    JOptionPane.showMessageDialog(rootPane, "Item excluído com sucesso!");
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(rootPane, "Falha ao excluir item" +e.getMessage());
+                }
+            }
         }
     }//GEN-LAST:event_btDelFerroActionPerformed
 
